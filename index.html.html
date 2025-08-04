@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Independence Day Pakistan</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #004d00, #002600);
+      overflow-x: hidden;
+      position: relative;
+      color: white;
+    }
+
+    .flag-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/3/32/Flag_of_Pakistan.svg') center center / cover no-repeat;
+      opacity: 0.05;
+      animation: flagwave 10s linear infinite alternate;
+    }
+
+    @keyframes flagwave {
+      0% { background-position: center top; }
+      100% { background-position: center bottom; }
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 100px auto 30px;
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 20px;
+      box-shadow: 0 0 20px #00ff00;
+    }
+
+    .headline {
+      font-size: 2.7em;
+      font-weight: bold;
+      text-shadow: 0 0 10px #fff, 0 0 20px #00ff00, 0 0 30px #00ff00;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { text-shadow: 0 0 10px #00ff00; }
+      100% { text-shadow: 0 0 30px #00ff00; }
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      border-radius: 30px;
+      border: 2px solid #00ff00;
+      background: #111;
+      color: #fff;
+      width: 80%;
+      margin-top: 20px;
+      font-size: 1em;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px 30px;
+      background-color: #00ff00;
+      border: none;
+      border-radius: 30px;
+      color: #000;
+      font-weight: bold;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background-color: #fff;
+      box-shadow: 0 0 15px #00ff00;
+    }
+
+    #link {
+      margin-top: 20px;
+      font-family: monospace;
+      background: #111;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    #whatsapp {
+      display: none;
+      margin-top: 15px;
+      background: #25D366;
+      padding: 12px 25px;
+      border-radius: 30px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .fireworks {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      opacity: 1;
+      animation: explode 1.2s forwards;
+    }
+
+    @keyframes explode {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(25); opacity: 0; }
+    }
+
+    .adsterra {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      background: #111;
+      padding: 10px;
+      z-index: 10;
+    }
+
+    .music-btn {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background: #00ff00;
+      color: black;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div class="flag-bg"></div>
+<div class="fireworks" id="fireworks"></div>
+
+<div class="music-btn" onclick="toggleMusic()">🔊 Music</div>
+
+<div class="container">
+  <h1 id="headline" class="headline">HAPPY INDEPENDENCE DAY</h1>
+  <p>Enter your name:</p>
+  <input type="text" id="name" placeholder="Your name here">
+  <br>
+  <button onclick="generateLink()">Generate</button>
+  <div id="link"></div>
+  <a id="whatsapp" href="#" target="_blank">Share on WhatsApp</a>
+</div>
+
+<div class="adsterra">
+  <script type="text/javascript">
+    atOptions = {
+      'key' : 'bd5efd887529fb79b90bde8fd81d3827',
+      'format' : 'iframe',
+      'height' : 90,
+      'width' : 728,
+      'params' : {}
+    };
+  </script>
+  <script type="text/javascript" src="//www.highperformanceformat.com/bd5efd887529fb79b90bde8fd81d3827/invoke.js"></script>
+</div>
+
+<audio id="bgMusic" loop autoplay>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function generateLink() {
+  const name = document.getElementById('name').value.trim();
+  if (!name) return alert("Please enter your name");
+  const base = window.location.href.split("?")[0];
+  const link = base + "?from=" + encodeURIComponent(name);
+  document.getElementById("link").innerHTML = "<strong>Shareable link:</strong><br>" + link;
+  document.getElementById("whatsapp").style.display = "inline-block";
+  document.getElementById("whatsapp").href = "https://api.whatsapp.com/send?text=" + encodeURIComponent("Independence Day greeting from " + name + ": " + link);
+}
+
+const url = new URLSearchParams(window.location.search);
+const from = url.get("from");
+if (from) document.getElementById("headline").innerText = "HAPPY INDEPENDENCE DAY from " + from;
+
+function launchFirework() {
+  const f = document.createElement("div");
+  f.className = "particle";
+  f.style.left = Math.random() * window.innerWidth + "px";
+  f.style.top = Math.random() * window.innerHeight + "px";
+  f.style.background = ["#fff", "#0f0", "#ff0", "#f00", "#0ff", "#f0f"][Math.floor(Math.random() * 6)];
+  document.getElementById("fireworks").appendChild(f);
+  setTimeout(() => f.remove(), 1200);
+}
+setInterval(launchFirework, 2000);
+
+function toggleMusic() {
+  const audio = document.getElementById("bgMusic");
+  if (audio.paused) {
+    audio.play();
+    document.querySelector(".music-btn").innerText = "🔊 Music";
+  } else {
+    audio.pause();
+    document.querySelector(".music-btn").innerText = "🔇 Music";
+  }
+}
+</script>
+</body>
+</html>
